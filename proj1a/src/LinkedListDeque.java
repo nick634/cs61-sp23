@@ -19,6 +19,19 @@ public class LinkedListDeque<anyType> {
         sentinel.next = sentinel;
         sentinel.previous = sentinel;
     }
+    public LinkedListDeque LinkedListDeque(LinkedListDeque other){
+        LinkedListDeque L = new LinkedListDeque<anyType>();
+        if (other.size() == 0){
+            return L;
+        }
+        Node n = other.sentinel.next;
+        while (n != other.sentinel){
+            Node copy = n;
+            L.addLast(n.item);
+            n = n.next;
+        }
+        return L;
+    }
     public Node makeNode(anyType i){
         Node n = new Node();
         n.item = i;
@@ -91,16 +104,22 @@ public class LinkedListDeque<anyType> {
             return null;
         }
         Node n = sentinel.next;
-        int s = this.size;
-        int i = 0;
-        while (i < s){
-            if (i == index){
-                break;
-            }
+        while (index > 0){
             n = n.next;
-            i++;
+            index--;
         }
         return n.item;
+    }
+    public anyType getRecursive(int index){
+        if (this.size == 0 || index > this.size){
+            return null;
+        }
+        if (index == 0){
+            return this.sentinel.next.item;
+        }
+        LinkedListDeque L = this.LinkedListDeque(this); //deep copy
+        L.removeFirst();
+        return (anyType) L.getRecursive(index - 1);
     }
 
     public static void main(String[] args){
@@ -111,8 +130,16 @@ public class LinkedListDeque<anyType> {
         L.addLast("hello");
         L.addLast("there");
         L.addLast("man");
+        LinkedListDeque L2 = L.LinkedListDeque(L);
         L.printDeque();
-        System.out.println(L.get(2));
+        L2.printDeque();
+        System.out.println("space");
+        L2.removeFirst();
+        L2.addFirst("hi");
+        L.printDeque();
+        L2.printDeque();
+        System.out.println("space");
+        System.out.println(L2.getRecursive(0));
     }
 }
 
