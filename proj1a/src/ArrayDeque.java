@@ -15,15 +15,21 @@ public class ArrayDeque<anyType> {
     public int size(){
         return this.size;
     }
+    public boolean isEmpty(){
+        if (this.size == 0){
+            return true;
+        }
+        return false;
+    }
     public anyType get(int index){
         if (index >= this.size){
             return null;
         }
         return this.items[index];
     }
-    public float getUsage(){
+    private float getUsage(){
         return (float) (this.size/(this.length * 1.0));
-    }
+    } 
     public void addFirst(anyType item){
         if (this.size + 1 > this.length){
             this.items = this.makeBigger(); //now its a bigger array
@@ -32,11 +38,37 @@ public class ArrayDeque<anyType> {
         this.items[0] = item;
         this.size += 1;
     }
+    public void addLast(anyType item){
+        if (this.size + 1 > this.length){
+            this.items = this.makeBigger(); //now its a bigger array
+        }
+        this.items[this.size] = item;
+        this.size += 1;
+    }
+    public void removeLast(){
+        if (!this.isEmpty()){
+            this.size -= 1;
+            float usageRatio = this.getUsage();
+            if (usageRatio < .25){
+                this.items = this.makeSmaller();
+            }
+            this.items[size] = null;
+        }
+    }
     private anyType[] makeBigger(){
         this.length = this.size * RFACTOR; //RFACTOR == 3
         anyType[] bigger = (anyType[]) new Object[this.length]; //so triples in size
         System.arraycopy(this.items, 0, bigger, 0,this.size); //why not shifting?
         return bigger;
+    }
+    private anyType[] makeSmaller(){
+        if (this.size > 16){
+            this.length = this.size / 2;
+            anyType[] smaller = (anyType[]) new Object[this.length];
+            System.arraycopy(this.items, 0, smaller,0,this.size);
+            return smaller;
+        }
+        return this.items;
     }
     public void printArrayDeque(){
         for (int i = 0; i < this.length; i++){
@@ -47,15 +79,19 @@ public class ArrayDeque<anyType> {
     public static void main(String[] args){
         LinkedListDeque L = new LinkedListDeque<String>();
         ArrayDeque A = new ArrayDeque<String>();
-        A.addFirst("hello");
-        A.addFirst("there");
-        A.addFirst("hello");
-        A.addFirst("there");
-        A.addFirst("hello");
-        A.addFirst("there");
-        A.addFirst("hello");
-        A.addFirst("there");
-        A.addFirst("Nick");
+        System.out.println(A.isEmpty());
+        A.addLast("hello");
+        A.addLast("there");
+        A.addLast("hello");
+        A.addLast("there");
+        A.addLast("hello");
+        A.addLast("there");
+        A.addLast("hello");
+        A.addLast("there");
+        A.addLast("Nick");
+        A.removeLast();
+        //A.removeLast();
         A.printArrayDeque();
+        System.out.println(A.isEmpty());
     }
 }
