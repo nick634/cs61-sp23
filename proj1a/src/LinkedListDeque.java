@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class LinkedListDeque<anyType> {
     //make a deque
     private Node sentinel;
@@ -122,6 +124,16 @@ public class LinkedListDeque<anyType> {
         return (anyType) L.getRecursive(index - 1);
     }
 
+    public ArrayList<anyType> toList(){
+        ArrayList<anyType> returnList = new ArrayList<anyType>();
+        Node n = this.sentinel.next;
+        while (n != this.sentinel){
+            returnList.add(n.item);
+            n = n.next;
+        }
+        return returnList;
+    }
+
     public static void main(String[] args){
         LinkedListDeque L = new LinkedListDeque<String>();
         L.sentinel.item = "69";
@@ -138,6 +150,8 @@ public class LinkedListDeque<anyType> {
         L2.addFirst("hi");
         L.printDeque();
         L2.printDeque();
+        ArrayList L3 = L2.toList();
+        System.out.println(L3);
         System.out.println("space");
         System.out.println(L2.getRecursive(0));
     }

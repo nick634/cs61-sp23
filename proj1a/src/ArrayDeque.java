@@ -29,7 +29,7 @@ public class ArrayDeque<anyType> {
     }
     private float getUsage(){
         return (float) (this.size/(this.length * 1.0));
-    } 
+    }
     public void addFirst(anyType item){
         if (this.size + 1 > this.length){
             this.items = this.makeBigger(); //now its a bigger array
@@ -47,7 +47,7 @@ public class ArrayDeque<anyType> {
     }
     public void removeFirst(){
         if (!this.isEmpty()){
-            this.size -=1;
+            this.size -= 1;
             float usageRatio = this.getUsage();
             if (usageRatio < .25)
                 this.items = this.makeSmaller();
