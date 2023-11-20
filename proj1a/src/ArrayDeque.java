@@ -45,6 +45,18 @@ public class ArrayDeque<anyType> {
         this.items[this.size] = item;
         this.size += 1;
     }
+    public void removeFirst(){
+        if (!this.isEmpty()){
+            this.size -=1;
+            float usageRatio = this.getUsage();
+            if (usageRatio < .25)
+                this.items = this.makeSmaller();
+        }
+        this.items[0] = null;
+        anyType[] copy = (anyType[]) new Object[this.length];
+        System.arraycopy(this.items, 1, copy, 0, this.size);
+        this.items = copy;
+    }
     public void removeLast(){
         if (!this.isEmpty()){
             this.size -= 1;
@@ -89,7 +101,7 @@ public class ArrayDeque<anyType> {
         A.addLast("hello");
         A.addLast("there");
         A.addLast("Nick");
-        A.removeLast();
+        A.removeFirst();
         //A.removeLast();
         A.printArrayDeque();
         System.out.println(A.isEmpty());
