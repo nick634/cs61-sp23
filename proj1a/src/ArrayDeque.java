@@ -1,4 +1,6 @@
-public class ArrayDeque<anyType> {
+import java.util.List;
+
+public class ArrayDeque<anyType> implements Deque<anyType> {
     int size = 0;
     int length = 0;
     anyType[] items;
@@ -27,6 +29,12 @@ public class ArrayDeque<anyType> {
         }
         return this.items[index];
     }
+
+    @Override
+    public anyType getRecursive(int index) {
+        return null;
+    }
+
     private float getUsage(){
         return (float) (this.size/(this.length * 1.0));
     }
@@ -45,7 +53,9 @@ public class ArrayDeque<anyType> {
         this.items[this.size] = item;
         this.size += 1;
     }
-    public void removeFirst(){
+
+    public anyType removeFirst(){
+        anyType item = this.items[0];
         if (!this.isEmpty()){
             this.size -= 1;
             float usageRatio = this.getUsage();
@@ -56,8 +66,11 @@ public class ArrayDeque<anyType> {
         anyType[] copy = (anyType[]) new Object[this.length];
         System.arraycopy(this.items, 1, copy, 0, this.size);
         this.items = copy;
+        return item;
     }
-    public void removeLast(){
+
+    public anyType removeLast(){
+        anyType item = this.items[size];
         if (!this.isEmpty()){
             this.size -= 1;
             float usageRatio = this.getUsage();
@@ -65,6 +78,7 @@ public class ArrayDeque<anyType> {
                 this.items = this.makeSmaller();
             }
             this.items[size] = null;
+            return item;
         }
     }
     private anyType[] makeBigger(){
@@ -89,6 +103,7 @@ public class ArrayDeque<anyType> {
         System.out.println();
     }
     public static void main(String[] args){
+        Deque<Integer> ad = new ArrayDeque<>();
         LinkedListDeque L = new LinkedListDeque<String>();
         ArrayDeque A = new ArrayDeque<String>();
         System.out.println(A.isEmpty());
