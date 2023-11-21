@@ -78,23 +78,87 @@ public class LinkedListDequeTest {
         Deque<String> lld1 = new LinkedListDeque<>();
 
         assertThat(lld1.size()).isEqualTo(0);
-        assertThat(lld1.isEmpty()).isEqualTo(true);
+        assertThat(lld1.isEmpty()).isTrue();
 
         lld1.addFirst("hello");
         assertThat(lld1.size()).isEqualTo(1);
-        assertThat(lld1.isEmpty()).isEqualTo(false);
+        assertThat(lld1.isEmpty()).isFalse();
 
         lld1.addLast("there");
         assertThat(lld1.size()).isEqualTo(2);
-        assertThat(lld1.isEmpty()).isEqualTo(false);
+        assertThat(lld1.isEmpty()).isFalse();
 
         lld1.removeFirst();
         assertThat(lld1.size()).isEqualTo(1);
-        assertThat(lld1.isEmpty()).isEqualTo(false);
+        assertThat(lld1.isEmpty()).isFalse();
 
         lld1.removeLast();
         assertThat(lld1.size()).isEqualTo(0);
-        assertThat(lld1.isEmpty()).isEqualTo(true);
+        assertThat(lld1.isEmpty()).isTrue();
+
+        lld1.removeLast();
+        assertThat(lld1.size()).isEqualTo(0);
+        assertThat(lld1.isEmpty()).isTrue();
     }
 
+    @Test
+    public void getTest(){
+        Deque<String> lld1 = new LinkedListDeque<>();
+        assertThat(lld1.get(0)).isNull();//test empty
+        assertThat(lld1.get(2)).isNull();
+        assertThat(lld1.get(-4)).isNull();
+
+        lld1.addLast("hello");
+        lld1.addLast("there");
+        lld1.addLast("nick");
+        assertThat(lld1.get(0)).isEqualTo("hello");//test empty
+        assertThat(lld1.get(1)).isEqualTo("there");
+        assertThat(lld1.get(2)).isEqualTo("nick");
+
+        lld1.removeFirst();
+        lld1.removeLast();
+        assertThat(lld1.get(0)).isEqualTo("there");
+        assertThat(lld1.get(1)).isNull();
+    }
+    @Test
+    public void getRecursiveTest(){
+        Deque<String> lld1 = new LinkedListDeque<>();
+        assertThat(lld1.getRecursive(0)).isNull();//test empty
+        assertThat(lld1.getRecursive(2)).isNull();
+        assertThat(lld1.getRecursive(-4)).isNull();
+
+        lld1.addLast("hello");
+        lld1.addLast("there");
+        lld1.addLast("nick");
+        assertThat(lld1.getRecursive(0)).isEqualTo("hello");//test empty
+        assertThat(lld1.getRecursive(1)).isEqualTo("there");
+        assertThat(lld1.getRecursive(2)).isEqualTo("nick");
+
+        lld1.removeFirst();
+        lld1.removeLast();
+        assertThat(lld1.getRecursive(0)).isEqualTo("there");
+        assertThat(lld1.getRecursive(1)).isNull();
+    }
+
+    @Test
+    public void removeFirstAndRemoveLastTest(){
+        Deque<String> lld1 = new LinkedListDeque<>();
+
+        lld1.addLast("hello");
+        lld1.addLast("there");
+        lld1.addLast("nick");
+        lld1.addLast("!");
+        assertThat(lld1.toList()).containsExactly("hello", "there", "nick", "!").inOrder();
+
+        lld1.removeFirst();
+        assertThat(lld1.toList()).containsExactly( "there", "nick", "!").inOrder();
+
+        lld1.removeLast();
+        assertThat(lld1.toList()).containsExactly( "there", "nick").inOrder();
+
+        lld1.removeFirst();
+        lld1.removeLast(); //now empty
+        assertThat(lld1.removeLast()).isNull();
+        assertThat(lld1.removeFirst()).isNull();
+    }
 }

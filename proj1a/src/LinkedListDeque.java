@@ -10,7 +10,7 @@ public class LinkedListDeque<anyType> implements Deque<anyType> {
         public Node next;
         public Node previous;
 
-        public anyType nullify(){
+        private anyType nullify(){
             this.next = null;
             this.previous = null;
             return this.item;
