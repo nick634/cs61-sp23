@@ -1,6 +1,7 @@
 import java.util.ArrayList;
+import java.util.List;
 
-public class LinkedListDeque<anyType> {
+public class LinkedListDeque<anyType> implements Deque<anyType> {
     //make a deque
     private Node sentinel;
     int size;
@@ -85,6 +86,7 @@ public class LinkedListDeque<anyType> {
         if (this.isEmpty()){
            return null;
         }
+        this.size -= 1;
         Node n = this.sentinel.next;
         this.sentinel.next = n.next;
         n.next.previous = sentinel;
@@ -95,6 +97,7 @@ public class LinkedListDeque<anyType> {
         if (this.isEmpty()){
             return null;
         }
+        this.size -= 1;
         Node n = this.sentinel.previous;
         n.previous.next = sentinel;
         sentinel.previous = n.previous;
@@ -124,7 +127,7 @@ public class LinkedListDeque<anyType> {
         return (anyType) L.getRecursive(index - 1);
     }
 
-    public ArrayList<anyType> toList(){
+    public List<anyType> toList(){
         ArrayList<anyType> returnList = new ArrayList<anyType>();
         Node n = this.sentinel.next;
         while (n != this.sentinel){
@@ -135,6 +138,7 @@ public class LinkedListDeque<anyType> {
     }
 
     public static void main(String[] args){
+        Deque<Integer> lld = new LinkedListDeque<>();
         LinkedListDeque L = new LinkedListDeque<String>();
         L.sentinel.item = "69";
         //LinkedListDeque.Node n1 = L.makeNode("hello");
@@ -150,7 +154,7 @@ public class LinkedListDeque<anyType> {
         L2.addFirst("hi");
         L.printDeque();
         L2.printDeque();
-        ArrayList L3 = L2.toList();
+        List<String> L3 = L2.toList();
         System.out.println(L3);
         System.out.println("space");
         System.out.println(L2.getRecursive(0));
