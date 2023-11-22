@@ -149,7 +149,7 @@ public class ArrayDeque<anyType> implements Deque<anyType> {
     public void addLast(anyType x) {
         size++;
         items[nextLast] = x;
-        if (!hasNext(nextLast)){
+        if (nextLast + 1 > length){
             nextLast = 0;
         }
         else {
@@ -160,24 +160,19 @@ public class ArrayDeque<anyType> implements Deque<anyType> {
     @Override
     public List<anyType> toList() {
         List<anyType> returnList = new ArrayList<>();
-        int i = nextFirst + 1; //current first
-        while (i != nextFirst){
-            returnList.add(items[i]);
-            if (hasNext(i)){
-                i++;
-            }
-            else {
-                i = 0;
+        for (int i = 0; i < length; i++){
+            int trueIndex = convertIndex(i);
+            if (items[trueIndex] != null) {
+                returnList.add(i, items[trueIndex]);
             }
         }
-        returnList.add(items[nextFirst]); //sloppy, gotta manually add last element to allow for loop
         return returnList;
     }
-    private boolean hasNext(int i){
-        if (i + 1 < length){
-            return true;
+    private int convertIndex(int desiredIndex){ //converts a desired index (as the user interprets) to the array's true index
+        if (nextFirst + 1 + desiredIndex >= length){
+            return nextFirst + 1 - (length - desiredIndex);
         }
-        return false;
+        return nextFirst + 1 + desiredIndex;
     }
 
     @Override
@@ -195,11 +190,27 @@ public class ArrayDeque<anyType> implements Deque<anyType> {
 
     @Override
     public anyType removeFirst() {
-        return null;
+        if (isEmpty()){
+            return null;
+        }
+        int firstIndex = convertIndex(0);
+        anyType item = items[firstIndex];
+        items[firstIndex] = null;
+        nextFirst = firstIndex;
+        size--;
+        return item;
     }
 
     @Override
     public anyType removeLast() {
+        if (isEmpty()){
+            return null;
+        }
+        int lastIndex = convertIndex(size - 1); //gets index of last non-null value in list
+        anyType item = items[lastIndex];
+        items[lastIndex] = null;
+        nextLast = lastIndex;
+        size--;
         return null;
     }
 
@@ -209,11 +220,8 @@ public class ArrayDeque<anyType> implements Deque<anyType> {
         if (isEmpty() || index > length){
             return null;
         }
-        int firstIndex = nextFirst + 1;
-        if (firstIndex + index < length){
-            return items[firstIndex + index];
-        }
-        return items[firstIndex - (length - index)];
+        int trueIndex = convertIndex(index);
+        return items[trueIndex];
     }
 
     @Override
@@ -223,15 +231,17 @@ public class ArrayDeque<anyType> implements Deque<anyType> {
     public static void main(String[] args){
         Deque<Integer> lla = new ArrayDeque<>();
         lla.addLast(1);
-        lla.addFirst(0);
         lla.addLast(2);
-        lla.addFirst(7);
-        lla.addFirst(6);
-        lla.addFirst(5);
         lla.addLast(3);
-        lla.addFirst(4);
+        lla.addLast(4);
+        lla.addLast(5);
+        //lla.removeFirst();
+        lla.removeLast();
         System.out.println(lla.toList());
-        System.out.println(lla.get(2));
+        System.out.println(lla.size());
+        //for (int i = 0; i < 8; i++){
+        //    System.out.println(lla.get(i));
+        //}
     }
 }
 
