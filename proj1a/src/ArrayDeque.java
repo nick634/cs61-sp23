@@ -120,14 +120,16 @@ import java.util.List;
     }
 }
  */
-import java.util.List;
 
 public class ArrayDeque<anyType> implements Deque<anyType> {
     anyType[] items;
     int size = 0;
-    int length = 0;
-    int nextFirst = 0;
-    int nextLast = 1; //not sure...bt dont think can be same as nextFirst
+    private int length = 0;
+    private int nextFirst = 0;
+    private int nextLast = 1;
+
+    private float usage = (float) (size/(length * 1.0));
+    private int RFACTOR = 3; //array resizing up multiple
 
     public ArrayDeque(){
         items = (anyType[]) new Object[8];
@@ -135,6 +137,9 @@ public class ArrayDeque<anyType> implements Deque<anyType> {
     }
     @Override
     public void addFirst(anyType x) {
+        if (size + 1 >= length){
+            items = makeBigger(); //now it's a 3x bigger array
+        }
         size++;
         items[nextFirst] = x;
         if (nextFirst == 0){
@@ -147,6 +152,9 @@ public class ArrayDeque<anyType> implements Deque<anyType> {
 
     @Override
     public void addLast(anyType x) {
+        if (size + 1 >= length){
+            items = makeBigger();
+        }
         size++;
         items[nextLast] = x;
         if (nextLast + 1 >= length){
@@ -187,17 +195,23 @@ public class ArrayDeque<anyType> implements Deque<anyType> {
     public int size() {
         return size;
     }
+    public int length() {
+        return length;
+    }
 
     @Override
     public anyType removeFirst() {
         if (isEmpty()){
             return null;
         }
+        size--;
+        if (usage < .25){
+            items = makeSmaller();
+        }
         int firstIndex = convertIndex(0);
         anyType item = items[firstIndex];
         items[firstIndex] = null;
         nextFirst = firstIndex;
-        size--;
         return item;
     }
 
@@ -205,6 +219,9 @@ public class ArrayDeque<anyType> implements Deque<anyType> {
     public anyType removeLast() {
         if (isEmpty()){
             return null;
+        }
+        if (((float)(size/length * 1.0)) < .25){
+            items = makeSmaller();
         }
         int lastIndex = convertIndex(size - 1); //gets index of last non-null value in list
         anyType item = items[lastIndex];
@@ -222,6 +239,21 @@ public class ArrayDeque<anyType> implements Deque<anyType> {
         }
         int trueIndex = convertIndex(index);
         return items[trueIndex];
+    }
+    private anyType[] makeBigger(){
+        length = length * RFACTOR;
+        anyType[] bigger = (anyType[]) new Object[length]; //so triples in size
+        System.arraycopy(items, 0, bigger, 0,size); //why not shifting?
+        return bigger;
+    }
+    private anyType[] makeSmaller(){
+        if (size >= 16){
+            length = size / 2;
+            anyType[] smaller = (anyType[]) new Object[length];
+            System.arraycopy(items, 0, smaller,0,size);
+            return smaller;
+        }
+        return items;
     }
 
     @Override

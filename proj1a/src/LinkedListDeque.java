@@ -127,6 +127,12 @@ public class LinkedListDeque<anyType> implements Deque<anyType> {
         return (anyType) L.getRecursive(index - 1);
     }
 
+    @Override
+    public int length() {
+        return 0;
+    }
+
+
     public List<anyType> toList(){
         ArrayList<anyType> returnList = new ArrayList<anyType>();
         Node n = this.sentinel.next;
