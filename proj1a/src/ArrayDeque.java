@@ -149,7 +149,7 @@ public class ArrayDeque<anyType> implements Deque<anyType> {
     public void addLast(anyType x) {
         size++;
         items[nextLast] = x;
-        if (nextLast + 1 > length){
+        if (nextLast + 1 >= length){
             nextLast = 0;
         }
         else {
@@ -217,7 +217,7 @@ public class ArrayDeque<anyType> implements Deque<anyType> {
     @Override
     public anyType get(int index) { //should i consider the last "first" index 0?
         // nextFIrst + 1 = 0, nextFirst + 2 = 1, ...
-        if (isEmpty() || index > length){
+        if (isEmpty() || index >= length){
             return null;
         }
         int trueIndex = convertIndex(index);
