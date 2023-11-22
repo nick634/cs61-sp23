@@ -1,6 +1,7 @@
+import java.util.ArrayList;
 import java.util.List;
 
-public class ArrayDeque<anyType> implements Deque<anyType> {
+/**public class ArrayDeque<anyType> implements Deque<anyType> {
     int size = 0;
     int length = 0;
     anyType[] items;
@@ -30,11 +31,6 @@ public class ArrayDeque<anyType> implements Deque<anyType> {
         return this.items[index];
     }
 
-    @Override
-    public anyType getRecursive(int index) {
-        return null;
-    }
-
     private float getUsage(){
         return (float) (this.size/(this.length * 1.0));
     }
@@ -53,6 +49,7 @@ public class ArrayDeque<anyType> implements Deque<anyType> {
         this.items[this.size] = item;
         this.size += 1;
     }
+
 
     public anyType removeFirst(){
         anyType item = this.items[0];
@@ -122,3 +119,110 @@ public class ArrayDeque<anyType> implements Deque<anyType> {
         System.out.println(A.isEmpty());
     }
 }
+ */
+import java.util.List;
+
+public class ArrayDeque<anyType> implements Deque<anyType> {
+    anyType[] items;
+    int size = 0;
+    int length = 0;
+    int nextFirst = 0;
+    int nextLast = 1; //not sure...bt dont think can be same as nextFirst
+
+    public ArrayDeque(){
+        items = (anyType[]) new Object[8];
+        length = 8;
+    }
+    @Override
+    public void addFirst(anyType x) {
+        size++;
+        items[nextFirst] = x;
+        if (nextFirst == 0){
+            nextFirst = length - 1;
+        }
+        else {
+            nextFirst--;
+        }
+    }
+
+    @Override
+    public void addLast(anyType x) {
+        size++;
+        items[nextLast] = x;
+        if (!hasNext(nextLast)){
+            nextLast = 0;
+        }
+        else {
+            nextLast++;
+        }
+    }
+
+    @Override
+    public List<anyType> toList() {
+        List<anyType> returnList = new ArrayList<>();
+        int i = nextFirst + 1; //current first
+        while (i != nextFirst){
+            returnList.add(items[i]);
+            if (hasNext(i)){
+                i++;
+            }
+            else {
+                i = 0;
+            }
+        }
+        returnList.add(items[nextFirst]); //sloppy, gotta manually add last element to allow for loop
+        return returnList;
+    }
+    public boolean hasNext(int i){
+        if (i + 1 < length){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        if (size == 0){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public int size() {
+        return 0;
+    }
+
+    @Override
+    public anyType removeFirst() {
+        return null;
+    }
+
+    @Override
+    public anyType removeLast() {
+        return null;
+    }
+
+    @Override
+    public anyType get(int index) {
+        return null;
+    }
+
+    @Override
+    public anyType getRecursive(int index) {
+        return null;
+    }
+    public static void main(String[] args){
+        Deque<Integer> lla = new ArrayDeque<>();
+        lla.addLast(1);
+        lla.addFirst(0);
+        lla.addLast(2);
+        lla.addFirst(7);
+        lla.addFirst(6);
+        lla.addFirst(5);
+        lla.addLast(3);
+        lla.addFirst(4);
+        System.out.print(lla.toList());
+    }
+}
+
