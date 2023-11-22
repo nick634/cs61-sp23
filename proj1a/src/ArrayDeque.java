@@ -173,7 +173,7 @@ public class ArrayDeque<anyType> implements Deque<anyType> {
         returnList.add(items[nextFirst]); //sloppy, gotta manually add last element to allow for loop
         return returnList;
     }
-    public boolean hasNext(int i){
+    private boolean hasNext(int i){
         if (i + 1 < length){
             return true;
         }
@@ -190,7 +190,7 @@ public class ArrayDeque<anyType> implements Deque<anyType> {
 
     @Override
     public int size() {
-        return 0;
+        return size;
     }
 
     @Override
@@ -204,8 +204,16 @@ public class ArrayDeque<anyType> implements Deque<anyType> {
     }
 
     @Override
-    public anyType get(int index) {
-        return null;
+    public anyType get(int index) { //should i consider the last "first" index 0?
+        // nextFIrst + 1 = 0, nextFirst + 2 = 1, ...
+        if (isEmpty() || index > length){
+            return null;
+        }
+        int firstIndex = nextFirst + 1;
+        if (firstIndex + index < length){
+            return items[firstIndex + index];
+        }
+        return items[firstIndex - (length - index)];
     }
 
     @Override
@@ -222,7 +230,8 @@ public class ArrayDeque<anyType> implements Deque<anyType> {
         lla.addFirst(5);
         lla.addLast(3);
         lla.addFirst(4);
-        System.out.print(lla.toList());
+        System.out.println(lla.toList());
+        System.out.println(lla.get(2));
     }
 }
 
