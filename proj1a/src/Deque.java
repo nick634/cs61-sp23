@@ -77,4 +77,5 @@ public interface Deque<T> {
 
     int length();
 
+    float usage();
 }

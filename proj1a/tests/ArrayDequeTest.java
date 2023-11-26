@@ -47,15 +47,29 @@ public class ArrayDequeTest {
         }
         assertThat(lla.size()).isEqualTo(40);
         assertThat(lla.length()).isEqualTo(72);
+
+        Deque<Integer> llb = new ArrayDeque<>();
+        for (int i = 0; i < 4000; i++) {
+            llb.addLast(i);
+        }
+        assertThat(llb.size()).isEqualTo(4000);
+        assertThat(llb.length()).isEqualTo(5832);
     }
 
     public void makeSmallerTest() {
-        int x = 0;
         Deque<Integer> lla = new ArrayDeque<>();
+        for (int i = 0; i < 40; i++) { //[0, 1,..., 39]
+            lla.addLast(i);
+        }
+        int x = 0;
         while (x < 31) {
             lla.removeLast();
             x++;
+            if (lla.size() >= 8) {
+                assertThat(lla.usage()).isGreaterThan(0.25F);
+            }
         }
+        assertThat(lla.length()).isEqualTo(8);
     }
 }
 

@@ -132,6 +132,11 @@ public class LinkedListDeque<anyType> implements Deque<anyType> {
         return 0;
     }
 
+    @Override
+    public float usage() {
+        return 0;
+    }
+
 
     public List<anyType> toList(){
         ArrayList<anyType> returnList = new ArrayList<anyType>();
