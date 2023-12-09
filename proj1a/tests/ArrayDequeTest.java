@@ -55,21 +55,22 @@ public class ArrayDequeTest {
         assertThat(llb.size()).isEqualTo(4000);
         assertThat(llb.length()).isEqualTo(5832);
     }
-
+    @Test
     public void makeSmallerTest() {
-        Deque<Integer> lla = new ArrayDeque<>();
-        for (int i = 0; i < 40; i++) { //[0, 1,..., 39]
-            lla.addLast(i);
+        Deque<Integer> llc = new ArrayDeque<>();
+        for (int i = 0; i < 400; i++) { //[0, 1,..., 39]
+            llc.addLast(i);
         }
         int x = 0;
-        while (x < 31) {
-            lla.removeLast();
+        while (x < 395) {
+            llc.removeFirst();
             x++;
-            if (lla.size() >= 8) {
-                assertThat(lla.usage()).isGreaterThan(0.25F);
+            if (llc.size() >= 8) {
+                assertThat(llc.usage()).isGreaterThan(0.25F);
             }
         }
-        assertThat(lla.length()).isEqualTo(8);
+        assertThat(llc.length()).isEqualTo(20);
+        assertThat(llc.toList()).containsExactly(395,396,397,398,399).inOrder();
     }
 }
 
