@@ -134,11 +134,7 @@ public class ArrayDeque<anyType> implements Deque<anyType> {
     }
     private anyType[] makeSmaller(){
         if (size >= 16){
-            int newLength = size / 2;
-            if (nextFirst == size){
-                nextFirst = newLength;
-            }
-            length = newLength;
+            length = size / 2;
             anyType[] smaller = (anyType[]) new Object[length];
             System.arraycopy(items, 0, smaller,0,size);
             return smaller;
