@@ -123,14 +123,22 @@ public class ArrayDeque<anyType> implements Deque<anyType> {
         return items[trueIndex];
     }
     private anyType[] makeBigger(){
-        length = length * RFACTOR;
+        int newLength = length * RFACTOR;
+        if (nextFirst == size){
+            nextFirst = newLength - 1;
+        }
+        length = newLength;
         anyType[] bigger = (anyType[]) new Object[length]; //so triples in size
         System.arraycopy(items, 0, bigger, 0,size); //why not shifting?
         return bigger;
     }
     private anyType[] makeSmaller(){
         if (size >= 16){
-            length = size / 2;
+            int newLength = size / 2;
+            if (nextFirst == size){
+                nextFirst = newLength;
+            }
+            length = newLength;
             anyType[] smaller = (anyType[]) new Object[length];
             System.arraycopy(items, 0, smaller,0,size);
             return smaller;
