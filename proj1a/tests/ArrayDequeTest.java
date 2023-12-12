@@ -37,6 +37,26 @@ public class ArrayDequeTest {
         llb.removeLast();
         llb.removeLast();
         assertThat(llb.toList()).containsExactly(2, 3, 4);
+
+        Deque<Integer> llc = new ArrayDeque<>();
+        for (int i = 0; i <= 40; i++){
+            if (i % 2 == 0){
+                llc.addLast(i);
+            }
+            else{
+                llc.addFirst(i);
+            }
+        }
+        assertThat(llc.toList()).containsExactly(39,37,35,33,31,29,27,25,23,21,19,17,15,13,11,9,7,5,3,1,0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40);
+        for (int j = 0; j < 35; j++){
+            if (j % 2 == 0){
+                llc.removeLast();
+            }
+            else{
+                llc.removeFirst();
+            }
+        }
+        assertThat(llc.toList()).containsExactly(5,3,1,0,2,4);
     }
 
     @Test
@@ -71,6 +91,44 @@ public class ArrayDequeTest {
         }
         assertThat(llc.length()).isEqualTo(20);
         assertThat(llc.toList()).containsExactly(395,396,397,398,399).inOrder();
+
+        Deque<Integer> lld = new ArrayDeque<>();
+        for (int i = 0; i <= 40; i++){
+            if (i % 2 == 0){
+                lld.addLast(i);
+            }
+            else{
+                lld.addFirst(i);
+            }
+        }
+        assertThat(lld.toList()).containsExactly(39,37,35,33,31,29,27,25,23,21,19,17,15,13,11,9,7,5,3,1,0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40);
+        for (int j = 0; j < 35; j++){
+            if (j % 2 == 0){
+                lld.removeLast();
+            }
+            else{
+                lld.removeFirst();
+            }
+        }
+        assertThat(lld.toList()).containsExactly(5,3,1,0,2,4);
+        assertThat(lld.length()).isEqualTo(18);
+    }
+
+    @Test
+    public void getTest(){
+        Deque<Integer> lla = new ArrayDeque<>();
+        for (int i = 0; i < 100; i++){
+            lla.addLast(i);
+        }
+        for (int j = 0; j < 100; j++){
+            assertThat(lla.get(j)).isEqualTo(j);
+        }
+        for (int k = 0; k < 80; k++){
+            lla.removeLast();
+        }
+        for (int l = 0; l < 20; l++){
+            assertThat(lla.get(l)).isEqualTo(l);
+        }
     }
 }
 

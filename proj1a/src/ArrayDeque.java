@@ -128,9 +128,9 @@ public class ArrayDeque<anyType> implements Deque<anyType> {
         length = length * RFACTOR;
         anyType[] bigger = (anyType[]) new Object[length]; //so triples in size
 
-        System.arraycopy(items, firstIndex, bigger,0,size - firstIndex); //first element to end
+        System.arraycopy(items, firstIndex, bigger,0,size - firstIndex); //first element of list to end of memory
         if (firstIndex != 0){
-            System.arraycopy(items, 0, bigger,size - firstIndex, lastIndex + 1);
+            System.arraycopy(items, 0, bigger,size - firstIndex, lastIndex + 1); //rest of list
         }
         nextFirst = length - 1;
         nextLast = size;
@@ -138,9 +138,15 @@ public class ArrayDeque<anyType> implements Deque<anyType> {
     }
     private anyType[] makeSmaller(){
         if (length >= 16){
-            length = length / 2;
-            anyType[] smaller = (anyType[]) new Object[length];
-            System.arraycopy(items, nextFirst + 1, smaller,0,size + 1);
+            int newLength = length / 2;
+            anyType[] smaller = (anyType[]) new Object[newLength];
+            if (nextFirst == length - 1){ //annoying case when nextFirst is last memory box
+                System.arraycopy(items, 0, smaller,0,size + 1);
+            }
+            else{
+                System.arraycopy(items, nextFirst + 1, smaller,0,size + 1);
+            }
+            length = newLength;
             nextFirst = length - 1;
             nextLast = size;
             return smaller;
