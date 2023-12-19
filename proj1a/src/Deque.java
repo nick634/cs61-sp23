@@ -76,6 +76,4 @@ public interface Deque<T> {
     T getRecursive(int index);
 
     int length();
-
-    float usage();
 }

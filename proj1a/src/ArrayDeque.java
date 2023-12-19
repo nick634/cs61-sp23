@@ -8,7 +8,6 @@ public class ArrayDeque<T> implements Deque<T> {
     private int nextFirst = 0;
     private int nextLast = 1;
 
-    private float usage = (float) size / length ;
     private int RFACTOR = 3; //array resizing up multiple
 
     public ArrayDeque(){
@@ -78,8 +77,6 @@ public class ArrayDeque<T> implements Deque<T> {
     public int length() {
         return length;
     }
-
-    public float usage(){return usage;}
 
     @Override
     public T removeFirst() {

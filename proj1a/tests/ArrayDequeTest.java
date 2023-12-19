@@ -105,7 +105,7 @@ public class ArrayDequeTest {
             }
             x--;
             if (llc.size() >= 8) {
-                assertThat(llc.usage()).isGreaterThan(0.25F);
+                assertThat((float)(llc.size()*1.0/llc.length())).isAtLeast(0.25F);
             }
         }
         assertThat(llc.length()).isEqualTo(20);

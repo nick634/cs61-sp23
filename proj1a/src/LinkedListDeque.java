@@ -132,12 +132,6 @@ public class LinkedListDeque<T> implements Deque<T> {
         return 0;
     }
 
-    @Override
-    public float usage() {
-        return 0;
-    }
-
-
     public List<T> toList(){
         ArrayList<T> returnList = new ArrayList<T>();
         Node n = this.sentinel.next;
