@@ -1,8 +1,8 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArrayDeque<anyType> implements Deque<anyType> {
-    anyType[] items;
+public class ArrayDeque<T> implements Deque<T> {
+    T[] items;
     int size = 0;
     private int length = 0;
     private int nextFirst = 0;
@@ -12,11 +12,11 @@ public class ArrayDeque<anyType> implements Deque<anyType> {
     private int RFACTOR = 3; //array resizing up multiple
 
     public ArrayDeque(){
-        items = (anyType[]) new Object[8];
+        items = (T[]) new Object[8];
         length = 8;
     }
     @Override
-    public void addFirst(anyType x) {
+    public void addFirst(T x) {
         if (size + 1 > length){
             items = makeBigger(); //now it's a 3x bigger array
         }
@@ -31,7 +31,7 @@ public class ArrayDeque<anyType> implements Deque<anyType> {
     }
 
     @Override
-    public void addLast(anyType x) {
+    public void addLast(T x) {
         if (size + 1 > length){
             items = makeBigger();
         }
@@ -46,8 +46,8 @@ public class ArrayDeque<anyType> implements Deque<anyType> {
     }
 
     @Override
-    public List<anyType> toList() {
-        List<anyType> returnList = new ArrayList<>();
+    public List<T> toList() {
+        List<T> returnList = new ArrayList<>();
         for (int i = 0; i < length; i++){
             int trueIndex = convertIndex(i);
             if (items[trueIndex] != null) {
@@ -82,7 +82,7 @@ public class ArrayDeque<anyType> implements Deque<anyType> {
     public float usage(){return usage;}
 
     @Override
-    public anyType removeFirst() {
+    public T removeFirst() {
         if (isEmpty()){
             return null;
         }
@@ -91,14 +91,14 @@ public class ArrayDeque<anyType> implements Deque<anyType> {
             items = makeSmaller();
         }
         int firstIndex = convertIndex(0);
-        anyType item = items[firstIndex];
+        T item = items[firstIndex];
         items[firstIndex] = null;
         nextFirst = firstIndex;
         return item;
     }
 
     @Override
-    public anyType removeLast() {
+    public T removeLast() {
         if (isEmpty()){
             return null;
         }
@@ -106,7 +106,7 @@ public class ArrayDeque<anyType> implements Deque<anyType> {
             items = makeSmaller();
         }
         int lastIndex = convertIndex(size - 1); //gets index of last non-null value in list
-        anyType item = items[lastIndex];
+        T item = items[lastIndex];
         items[lastIndex] = null;
         nextLast = lastIndex;
         size--;
@@ -114,7 +114,7 @@ public class ArrayDeque<anyType> implements Deque<anyType> {
     }
 
     @Override
-    public anyType get(int index) { //should i consider the last "first" index 0?
+    public T get(int index) { //should i consider the last "first" index 0?
         // nextFIrst + 1 = 0, nextFirst + 2 = 1, ...
         if (isEmpty() || index >= length){
             return null;
@@ -122,11 +122,11 @@ public class ArrayDeque<anyType> implements Deque<anyType> {
         int trueIndex = convertIndex(index);
         return items[trueIndex];
     }
-    private anyType[] makeBigger(){
+    private T[] makeBigger(){
         int firstIndex = convertIndex(0);
         int lastIndex = convertIndex(size - 1);
         length = length * RFACTOR;
-        anyType[] bigger = (anyType[]) new Object[length]; //so triples in size
+        T[] bigger = (T[]) new Object[length]; //so triples in size
 
         System.arraycopy(items, firstIndex, bigger,0,size - firstIndex); //first element of list to end of memory
         if (firstIndex != 0){
@@ -136,10 +136,10 @@ public class ArrayDeque<anyType> implements Deque<anyType> {
         nextLast = size;
         return bigger;
     }
-    private anyType[] makeSmaller(){
+    private T[] makeSmaller(){
         if (length >= 16){
             int newLength = length / 2;
-            anyType[] smaller = (anyType[]) new Object[newLength];
+            T[] smaller = (T[]) new Object[newLength];
             if (nextFirst == length - 1){ //annoying case when nextFirst is last memory box
                 System.arraycopy(items, 0, smaller,0,size + 1);
             }
@@ -155,7 +155,7 @@ public class ArrayDeque<anyType> implements Deque<anyType> {
     }
 
     @Override
-    public anyType getRecursive(int index) {
+    public T getRecursive(int index) {
         return null;
     }
     public static void main(String[] args){

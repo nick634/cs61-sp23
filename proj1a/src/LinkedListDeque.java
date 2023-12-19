@@ -1,16 +1,16 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class LinkedListDeque<anyType> implements Deque<anyType> {
+public class LinkedListDeque<T> implements Deque<T> {
     //make a deque
     private Node sentinel;
     int size;
     public class Node{
-        public anyType item;
+        public T item;
         public Node next;
         public Node previous;
 
-        private anyType nullify(){
+        private T nullify(){
             this.next = null;
             this.previous = null;
             return this.item;
@@ -23,7 +23,7 @@ public class LinkedListDeque<anyType> implements Deque<anyType> {
         sentinel.previous = sentinel;
     }
     public LinkedListDeque LinkedListDeque(LinkedListDeque other){
-        LinkedListDeque L = new LinkedListDeque<anyType>();
+        LinkedListDeque L = new LinkedListDeque<T>();
         if (other.size() == 0){
             return L;
         }
@@ -35,13 +35,13 @@ public class LinkedListDeque<anyType> implements Deque<anyType> {
         }
         return L;
     }
-    public Node makeNode(anyType i){
+    public Node makeNode(T i){
         Node n = new Node();
         n.item = i;
         return n;
     }
 
-    public void addFirst(anyType item){
+    public void addFirst(T item){
         Node n = this.makeNode(item);
         Node s = this.sentinel;
         if (this.size == 0){ //dont love this...how else to make sentinel loop with first node?
@@ -53,7 +53,7 @@ public class LinkedListDeque<anyType> implements Deque<anyType> {
         s.next = n;
         size++;
     }
-    public void addLast(anyType item){
+    public void addLast(T item){
         Node n = this.makeNode(item);
         Node s = this.sentinel;
 
@@ -82,7 +82,7 @@ public class LinkedListDeque<anyType> implements Deque<anyType> {
         System.out.println();
     }
 
-    public anyType removeFirst(){
+    public T removeFirst(){
         if (this.isEmpty()){
            return null;
         }
@@ -90,10 +90,10 @@ public class LinkedListDeque<anyType> implements Deque<anyType> {
         Node n = this.sentinel.next;
         this.sentinel.next = n.next;
         n.next.previous = sentinel;
-        anyType item = n.nullify();
+        T item = n.nullify();
         return item; //should I null this or no? will garbage collector dispose of it?
     }
-    public anyType removeLast(){
+    public T removeLast(){
         if (this.isEmpty()){
             return null;
         }
@@ -101,10 +101,10 @@ public class LinkedListDeque<anyType> implements Deque<anyType> {
         Node n = this.sentinel.previous;
         n.previous.next = sentinel;
         sentinel.previous = n.previous;
-        anyType item = n.nullify();
+        T item = n.nullify();
         return item;
     }
-    public anyType get(int index){
+    public T get(int index){
         if (this.isEmpty() || index >= this.size){
             return null;
         }
@@ -115,7 +115,7 @@ public class LinkedListDeque<anyType> implements Deque<anyType> {
         }
         return n.item;
     }
-    public anyType getRecursive(int index){
+    public T getRecursive(int index){
         if (this.size == 0 || index > this.size){
             return null;
         }
@@ -124,7 +124,7 @@ public class LinkedListDeque<anyType> implements Deque<anyType> {
         }
         LinkedListDeque L = this.LinkedListDeque(this); //deep copy
         L.removeFirst();
-        return (anyType) L.getRecursive(index - 1);
+        return (T) L.getRecursive(index - 1);
     }
 
     @Override
@@ -138,8 +138,8 @@ public class LinkedListDeque<anyType> implements Deque<anyType> {
     }
 
 
-    public List<anyType> toList(){
-        ArrayList<anyType> returnList = new ArrayList<anyType>();
+    public List<T> toList(){
+        ArrayList<T> returnList = new ArrayList<T>();
         Node n = this.sentinel.next;
         while (n != this.sentinel){
             returnList.add(n.item);
