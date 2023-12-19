@@ -10,7 +10,7 @@ import static com.google.common.truth.Truth.assertWithMessage;
 
 public class ArrayDequeTest {
     @Test
-    public void removeFirstTest() {
+    public void removeFirstAndLastTest() {
         Deque<Integer> lla = new ArrayDeque<>();
         lla.addFirst(0);
         lla.addLast(1);
@@ -79,12 +79,31 @@ public class ArrayDequeTest {
     public void makeSmallerTest() {
         Deque<Integer> llc = new ArrayDeque<>();
         for (int i = 0; i < 400; i++) { //[0, 1,..., 39]
-            llc.addLast(i);
+            llc.addLast(i); //this thing has 400 elements
         }
-        int x = 0;
-        while (x < 395) {
+        assertThat(llc.length()).isEqualTo(648);
+        int x = 400;
+        while (x > 5) {
             llc.removeFirst();
-            x++;
+            if (x == 162 || x == 82){ //when youre down to 161 elements then youll downsize, final one of this length is 81 elemts
+                assertThat(llc.length()).isEqualTo(324);
+            }
+            else if (x == 81 || x == 42){
+                assertThat(llc.length()).isEqualTo(162);//length should equal 162 at both ends
+            }
+            else if (x == 41 || x == 22){ //40 elms or 21
+                assertThat(llc.length()).isEqualTo(81);
+            }
+            else if (x == 21 || x == 11){ //now length 40
+                assertThat(llc.length()).isEqualTo(40);
+            }
+            else if (x == 10 || x == 6){
+                assertThat(llc.length()).isEqualTo(20);
+            }
+            else if (x < 6){
+                assertThat(llc.length()).isEqualTo(10);
+            }
+            x--;
             if (llc.size() >= 8) {
                 assertThat(llc.usage()).isGreaterThan(0.25F);
             }
@@ -124,11 +143,12 @@ public class ArrayDequeTest {
             assertThat(lla.get(j)).isEqualTo(j);
         }
         for (int k = 0; k < 80; k++){
-            lla.removeLast();
+            lla.removeFirst();
         }
         for (int l = 0; l < 20; l++){
-            assertThat(lla.get(l)).isEqualTo(l);
+            assertThat(lla.get(l)).isEqualTo(l+80);
         }
     }
 }
+
 

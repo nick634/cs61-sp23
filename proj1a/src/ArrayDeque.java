@@ -102,7 +102,7 @@ public class ArrayDeque<anyType> implements Deque<anyType> {
         if (isEmpty()){
             return null;
         }
-        if ((float) size/length < .25){
+        if ((float) (size - 1)/length < .25){
             items = makeSmaller();
         }
         int lastIndex = convertIndex(size - 1); //gets index of last non-null value in list
