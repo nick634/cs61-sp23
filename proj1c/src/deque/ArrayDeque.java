@@ -155,7 +155,7 @@ public class ArrayDeque<T> implements Deque<T> {
 
     @Override
     public T getRecursive(int index) {
-        return null;
+        return get(index);
     }
     public static void main(String[] args){
         Deque<Integer> lla = new ArrayDeque<>();
