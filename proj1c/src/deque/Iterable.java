@@ -1,6 +1,5 @@
 package deque;
 
 public interface Iterable<T> {
-    void iterator(){
-    }
+    //void iterator(){}
 }
