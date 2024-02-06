@@ -1,5 +1,6 @@
 package deque;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -76,4 +77,7 @@ public interface Deque<T> extends Iterable<T>{
      * @return element at {@code index} in the deque
      */
     T getRecursive(int index);
+
+    @Override
+    Iterator<T> iterator();
 }

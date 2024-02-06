@@ -1,6 +1,7 @@
 package deque;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class LinkedListDeque<T> implements Deque<T> {
@@ -137,6 +138,15 @@ public class LinkedListDeque<T> implements Deque<T> {
             n = n.next;
         }
         return returnList;
+    }
+
+    @Override
+    public Iterator<T> iterator(){
+        Iterator<T> seer = this.iterator();
+        while (seer.hasNext()){
+            T next = seer.next();
+        }
+        return seer;
     }
 
     public static void main(String[] args){

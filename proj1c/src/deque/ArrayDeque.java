@@ -1,6 +1,7 @@
 package deque;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class ArrayDeque<T> implements Deque<T> {
@@ -152,7 +153,10 @@ public class ArrayDeque<T> implements Deque<T> {
         }
         return items;
     }
-
+    @Override
+    public Iterator<T> iterator(){
+        return null;
+    }
     @Override
     public T getRecursive(int index) {
         return get(index);

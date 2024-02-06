@@ -1,5 +1,7 @@
 package deque;
 
+import java.util.Iterator;
+
 public interface Iterable<T> {
-    //void iterator(){}
+    Iterator<T> iterator();
 }
