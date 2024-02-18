@@ -160,6 +160,7 @@ public class LinkedListDeque<T> implements Deque<T> {
         }
     }
 
+
     public static void main(String[] args){
         LinkedListDeque<String> L = new LinkedListDeque<>();
         L.sentinel.item = "69";

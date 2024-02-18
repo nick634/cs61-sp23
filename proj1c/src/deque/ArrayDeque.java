@@ -171,6 +171,24 @@ public class ArrayDeque<T> implements Deque<T> {
             return returnItem;
         }
     }
+
+    @Override
+    public boolean equals(Object o){
+        if (this == o){ return true; }
+        if (o instanceof ArrayDeque other){
+            if (this.size != other.size){ return false; }
+            int i = 0;
+            for (T item: this){
+                if (item != other.get(i)){
+                    return false;
+                }
+                i++;
+            }
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public T getRecursive(int index) {
         return get(index);
@@ -185,11 +203,6 @@ public class ArrayDeque<T> implements Deque<T> {
                 lla.addFirst(i);
             }
         }
-        System.out.println(lla.toList());
-        //lla.removeFirst();
-        //lla.removeLast();
-        //System.out.println(lla.toList());
-        //System.out.println(lla.get(3));
         for (int i : lla){
             System.out.print(i);
         }
