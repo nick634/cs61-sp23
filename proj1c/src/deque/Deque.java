@@ -78,6 +78,6 @@ public interface Deque<T> extends Iterable<T>{
      */
     T getRecursive(int index);
 
-    @Override
-    Iterator<T> iterator();
+     Iterator<T> iterator();
+
 }

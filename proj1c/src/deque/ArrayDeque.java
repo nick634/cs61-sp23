@@ -155,7 +155,21 @@ public class ArrayDeque<T> implements Deque<T> {
     }
     @Override
     public Iterator<T> iterator(){
-        return null;
+        return new ArrayIterator();
+    }
+    public class ArrayIterator implements Iterator<T> {
+        private int wizPos;
+        public ArrayIterator(){
+            wizPos = 0;
+        }
+        public boolean hasNext(){
+            return convertIndex(wizPos) != nextLast;
+        }
+        public T next(){
+            T returnItem = items[convertIndex(wizPos)];
+            wizPos += 1;
+            return returnItem;
+        }
     }
     @Override
     public T getRecursive(int index) {
@@ -172,10 +186,13 @@ public class ArrayDeque<T> implements Deque<T> {
             }
         }
         System.out.println(lla.toList());
-        lla.removeFirst();
-        lla.removeLast();
-        System.out.println(lla.toList());
-        System.out.println(lla.get(3));
+        //lla.removeFirst();
+        //lla.removeLast();
+        //System.out.println(lla.toList());
+        //System.out.println(lla.get(3));
+        for (int i : lla){
+            System.out.print(i);
+        }
     }
 }
 

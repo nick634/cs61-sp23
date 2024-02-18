@@ -2,6 +2,7 @@ package deque;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 public class LinkedListDeque<T> implements Deque<T> {
@@ -142,34 +143,35 @@ public class LinkedListDeque<T> implements Deque<T> {
 
     @Override
     public Iterator<T> iterator(){
-        Iterator<T> seer = this.iterator();
-        while (seer.hasNext()){
-            T next = seer.next();
+        return new ListIterator();
+    }
+    public class ListIterator implements Iterator<T>{
+        private Node wizPos;
+        public ListIterator(){
+            wizPos = sentinel.next;
         }
-        return seer;
+        public boolean hasNext(){
+            return wizPos != sentinel;
+        }
+        public T next(){
+            T returnItem = wizPos.item;
+            wizPos = wizPos.next;
+            return returnItem;
+        }
     }
 
     public static void main(String[] args){
-        Deque<Integer> lld = new LinkedListDeque<>();
-        LinkedListDeque L = new LinkedListDeque<String>();
+        LinkedListDeque<String> L = new LinkedListDeque<>();
         L.sentinel.item = "69";
         //LinkedListDeque.Node n1 = L.makeNode("hello");
         //LinkedListDeque.Node n2 = L.makeNode("there");
         L.addLast("hello");
         L.addLast("there");
         L.addLast("man");
-        LinkedListDeque L2 = L.LinkedListDeque(L);
         L.printDeque();
-        L2.printDeque();
-        System.out.println("space");
-        L2.removeFirst();
-        L2.addFirst("hi");
-        L.printDeque();
-        L2.printDeque();
-        List<String> L3 = L2.toList();
-        System.out.println(L3);
-        System.out.println("space");
-        System.out.println(L2.getRecursive(0));
+        for (String s : L){
+            System.out.print(s + " ");
+        }
     }
 }
 
