@@ -81,5 +81,6 @@ public interface Deque<T> extends Iterable<T>{
     Iterator<T> iterator();
 
     boolean equals(Object other);
+    String toString(); //not great, same code in both deques
 
 }

@@ -175,7 +175,20 @@ public class LinkedListDeque<T> implements Deque<T> {
         }
         return false;
     }
-
+    @Override
+    public String toString(){
+        StringBuilder returnSB = new StringBuilder("[");
+        int i = 0;
+        for (T item: this){
+            returnSB.append((item).toString());
+            if (i != size - 1) {
+                returnSB.append(", ");
+            }
+            i++;
+        }
+        returnSB.append("]");
+        return returnSB.toString();
+    }
     public static void main(String[] args){
         LinkedListDeque<String> L = new LinkedListDeque<>();
         //L.sentinel.item = "69";
