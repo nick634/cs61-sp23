@@ -159,11 +159,26 @@ public class LinkedListDeque<T> implements Deque<T> {
             return returnItem;
         }
     }
-
+    @Override
+    public boolean equals(Object o){
+        if (this == o){ return true; }
+        if (o instanceof LinkedListDeque other){
+            if (this.size != other.size){ return false; }
+            int i = 0;
+            for (T item : this){
+                if (item != other.get(i)){
+                    return false;
+                }
+                i++;
+            }
+            return true;
+        }
+        return false;
+    }
 
     public static void main(String[] args){
         LinkedListDeque<String> L = new LinkedListDeque<>();
-        L.sentinel.item = "69";
+        //L.sentinel.item = "69";
         //LinkedListDeque.Node n1 = L.makeNode("hello");
         //LinkedListDeque.Node n2 = L.makeNode("there");
         L.addLast("hello");

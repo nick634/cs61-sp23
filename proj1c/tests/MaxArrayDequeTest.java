@@ -8,7 +8,7 @@ import static com.google.common.truth.Truth.assertWithMessage;
 
 public class MaxArrayDequeTest {
     @Test
-    public void equalsTest() {
+    public void ArrayEqualsTest() {
         Deque<Integer> lla = new ArrayDeque<>();
         for (int i = 0; i < 40; i++) { //[0, 1,..., 39]
             if (i > 20) {
@@ -32,5 +32,19 @@ public class MaxArrayDequeTest {
         //System.out.println(lla.toList());
         //System.out.println(lla.get(3));
         assertThat(llb).isEqualTo(lla);
+    }
+    @Test
+    public void ListEqualsTest(){
+        LinkedListDeque<String> L = new LinkedListDeque<>();
+        //LinkedListDeque.Node n1 = L.makeNode("hello");
+        //LinkedListDeque.Node n2 = L.makeNode("there");
+        L.addLast("hello");
+        L.addLast("there");
+        L.addLast("man");
+        LinkedListDeque<String> L2 = new LinkedListDeque<>();
+        L2.addLast("hello");
+        L2.addLast("there");
+        L2.addLast("man");
+        assertThat(L).isEqualTo(L2);
     }
 }
