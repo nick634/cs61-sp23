@@ -7,11 +7,11 @@ import java.util.List;
 public class ArrayDeque<T> implements Deque<T> {
     T[] items;
     int size = 0;
-    private int length = 0;
-    private int nextFirst = 0;
-    private int nextLast = 1;
+    int length = 0;
+    int nextFirst = 0;
+    int nextLast = 1; //made non-private so maxArrayDeque can access
 
-    private int RFACTOR = 3; //array resizing up multiple
+    int RFACTOR = 3; //array resizing up multiple
 
     public ArrayDeque(){
         items = (T[]) new Object[8];
