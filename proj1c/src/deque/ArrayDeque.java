@@ -220,6 +220,7 @@ public class ArrayDeque<T> implements Deque<T> {
         for (int i : lla){
             System.out.print(i);
         }
+
     }
 }
 

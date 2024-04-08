@@ -1,5 +1,6 @@
 package gh2;
 
+import deque.ArrayDeque;
 import deque.Deque;
 // TODO: maybe more imports
 
@@ -13,7 +14,7 @@ public class GuitarString {
 
     /* Buffer for storing sound data. */
     // TODO: uncomment the following line once you're ready to start this portion
-    private Deque<Double> buffer;
+    private Deque<Double> buffer = new ArrayDeque<>();
 
     /* Create a guitar string of the given frequency.  */
     public GuitarString(double frequency) {
@@ -23,7 +24,7 @@ public class GuitarString {
         //       Your should initially fill your buffer array with zeros.
         int capacity = Math.round((float) (SR/frequency));
         for (int i = 0; i < capacity; i++){
-            buffer.addLast(0.0);
+            buffer.addFirst(0.0);
         }
     }
 
@@ -38,8 +39,10 @@ public class GuitarString {
         //       other. This does not mean that you need to check that the numbers
         //       are different from each other. It means you should repeatedly call
         //       Math.random() - 0.5 to generate new random numbers for each array index.
-        for (double item: buffer){
-            double r = Math.random();
+        for (int i = 0; i < buffer.size(); i++){
+            double r = Math.random() - 0.5;
+            buffer.removeFirst();
+            buffer.addLast(r);
         }
     }
 
@@ -50,12 +53,15 @@ public class GuitarString {
         // TODO: Dequeue the front sample and enqueue a new sample that is
         //       the average of the two multiplied by the DECAY factor.
         //       **Do not call StdAudio.play().**
+        double first = buffer.removeFirst();
+        double newDouble = DECAY * (1/2)*(first + sample());
+        buffer.addLast(newDouble);
     }
 
     /* Return the double at the front of the buffer. */
     public double sample() {
         // TODO: Return the correct thing.
-        return 0;
+        return buffer.get(0);
     }
 }
     // TODO: Remove all comments that say TODO when you're done.
