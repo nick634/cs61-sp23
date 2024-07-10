@@ -75,5 +75,5 @@ public interface Deque<T> {
      */
     T getRecursive(int index);
 
-    int length();
+    int length(); //just here to make the testing nice
 }
